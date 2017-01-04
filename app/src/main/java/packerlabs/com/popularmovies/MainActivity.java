@@ -53,14 +53,15 @@ public class MainActivity extends AppCompatActivity {
         return mGridLayoutManager.findLastVisibleItemPosition();
     }
 
-
     void loadMovies(){
-            networkUtility = new NetworkUtility();
+        Log.d("Load Movies" , "Called");
+
+        networkUtility = new NetworkUtility();
             networkUtility.setCallBack(new NetworkUtility.OnDataCallBack() {
                 @Override
                 public void onEvent(ArrayList <Movie> movies) {
                     swapDataFromRecyclerView(movies);
-                    Log.d("CallBack" , "Data Returned");
+                    Log.d("CallBack" , movies.size() +" movies returned");
                 }
             });
     }

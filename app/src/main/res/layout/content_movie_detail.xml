@@ -8,10 +8,27 @@
     tools:context="packerlabs.com.popularmovies.MovieDetail"
     tools:showIn="@layout/activity_movie_detail">
 
-    <TextView android:id="@+id/movieDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/loading" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView android:id="@+id/movieDescription"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/loading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:max="5"
+            android:progress="2"
+            android:background="@color/white"
+            android:layout_height="50dp" />
+
+    </FrameLayout>
+
 
 </android.support.v4.widget.NestedScrollView>
