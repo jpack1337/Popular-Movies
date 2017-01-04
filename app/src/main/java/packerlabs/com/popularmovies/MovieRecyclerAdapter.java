@@ -27,6 +27,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     }
 
 
+
     @Override
     public void onBindViewHolder(MovieRecyclerAdapter.MovieHolder holder, int position) {
         Movie mMovie = mMovies.get(position);

@@ -42,8 +42,8 @@ public class NetworkUtility {
         public void onEvent(ArrayList<Movie> list);
     }
 
-
     ArrayList<Movie> getData () throws IOException{
+        Log.d("Get Data", "Called");
         Request request = new Request.Builder()
                 .url(this.URL)
                 .build();
@@ -95,8 +95,7 @@ public class NetworkUtility {
 
 
     public void getDataForCategory(String sortCategory){
-        String URL1 = String.format("http://api.themoviedb.org/3/movie/%s?api_key=%s", sortCategory, APIKey);
-        this.URL = URL1;
+        this.URL = String.format("http://api.themoviedb.org/3/movie/%s?api_key=%s", sortCategory, APIKey);
         try {
             getData();
         } catch (IOException e) {

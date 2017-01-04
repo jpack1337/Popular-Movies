@@ -1,5 +1,6 @@
 package packerlabs.com.popularmovies;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,25 +29,28 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
         mGridLayoutManager = new GridLayoutManager(this, 3);
 
-        mRecyclerView.setLayoutManager(mGridLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
+        //Update RecyclerView Column Count based on Orientation
+        //http://stackoverflow.com/questions/29579811/changing-number-of-columns-with-gridlayoutmanager-and-recyclerview
+        //Not sure if this is best case scenario or if I should set this in the dimensions layout, any thoughts?
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        }
+        else{
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        }        mRecyclerView.setHasFixedSize(true);
 
         SpacesItemDecoration spacingDecoration = new SpacesItemDecoration(this, R.dimen.item_offset);
         mRecyclerView.addItemDecoration(spacingDecoration);
 
         mMovieRecyclerAdapter = new MovieRecyclerAdapter(mMovieList);
         mRecyclerView.setAdapter(mMovieRecyclerAdapter);
-
+        loadMovies();
     }
-
-
 
     @Override
     public void onStart(){
         super.onStart();
 
-        if(mMovieList.size() == 0)
-            loadMovies();
     }
 
     private int getLastVisibleItemPosition() {
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Load Movies" , "Called");
 
         networkUtility = new NetworkUtility();
+        networkUtility.getDataForCategory("now_playing");
             networkUtility.setCallBack(new NetworkUtility.OnDataCallBack() {
                 @Override
                 public void onEvent(ArrayList <Movie> movies) {
