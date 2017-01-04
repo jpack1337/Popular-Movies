@@ -25,6 +25,8 @@ import okhttp3.Response;
 
 public class NetworkUtility {
     OkHttpClient client = new OkHttpClient();
+
+
     String APIKey = "ea4c651a09961d8d50e27ff0b17ed370";
     String URL = String.format("http://api.themoviedb.org/3/movie/%s?api_key=%s", "upcoming", APIKey);
     ArrayList <Movie> sortResultsArrayList = new ArrayList<>();

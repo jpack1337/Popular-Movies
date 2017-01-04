@@ -2,6 +2,8 @@ package packerlabs.com.popularmovies;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private GridLayoutManager mGridLayoutManager;
     private MovieRecyclerAdapter mMovieRecyclerAdapter;
     private ArrayList<Movie> mMovieList = new ArrayList<Movie>();
-
+    private CoordinatorLayout mCoordinatorLayout;
     private NetworkUtility networkUtility;
 
     @Override
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         networkUtility = new NetworkUtility();
         networkUtility.getDataForCategory("now_playing");
-            networkUtility.setCallBack(new NetworkUtility.OnDataCallBack() {
+        networkUtility.setCallBack(new NetworkUtility.OnDataCallBack() {
                 @Override
                 public void onEvent(ArrayList <Movie> movies) {
                     swapDataFromRecyclerView(movies);
@@ -85,22 +87,22 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.highestRatingSort:
                 networkUtility.getDataForCategory("top_rated");
-                swapDataFromRecyclerView(networkUtility.getSortResultsArrayList());
+                showSnackBar("Movies sorted by Top Rated");
                 return true;
 
             case R.id.nowPlayingSort:
                 networkUtility.getDataForCategory("now_playing");
-                swapDataFromRecyclerView(networkUtility.getSortResultsArrayList());
+                showSnackBar("Movies sorted by Now Playing");
                 return true;
 
             case R.id.popularMoviesSort:
                 networkUtility.getDataForCategory("popular");
-                swapDataFromRecyclerView(networkUtility.getSortResultsArrayList());
+                showSnackBar("Movies sorted by Most Popular");
                 return true;
 
             case R.id.upcomingMoviesSort:
                 networkUtility.getDataForCategory("upcoming");
-                swapDataFromRecyclerView(networkUtility.getSortResultsArrayList());
+                showSnackBar("Movies sorted by Upcoming");
                 return true;
 
             default:
@@ -118,5 +120,12 @@ public class MainActivity extends AppCompatActivity {
                 mMovieRecyclerAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    void showSnackBar(String message){
+        Snackbar snackbar = Snackbar
+                .make(mRecyclerView, message, Snackbar.LENGTH_LONG);
+
+        snackbar.show();
     }
 }
