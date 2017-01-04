@@ -1,6 +1,5 @@
 package packerlabs.com.popularmovies;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -8,15 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,14 +23,25 @@ import okhttp3.Response;
  * Created by AdminJpack on 1/1/17.
  */
 
-public class NetworkUtility{
+public class NetworkUtility {
     OkHttpClient client = new OkHttpClient();
     String APIKey = "ea4c651a09961d8d50e27ff0b17ed370";
     String URL = String.format("http://api.themoviedb.org/3/movie/%s?api_key=%s", "upcoming", APIKey);
     ArrayList <Movie> sortResultsArrayList = new ArrayList<>();
+    OnDataCallBack mDataCallBack;
+
 
     public NetworkUtility() {
     }
+
+    public void setCallBack(OnDataCallBack event){
+        this.mDataCallBack = event;
+    }
+
+    public interface OnDataCallBack {
+        public void onEvent(ArrayList<Movie> list);
+    }
+
 
     ArrayList<Movie> getData () throws IOException{
         Request request = new Request.Builder()
@@ -50,6 +56,8 @@ public class NetworkUtility{
 
                     @Override
                     public void onResponse(Call call, final Response response) throws IOException {
+                        if(sortResultsArrayList.size() > 0) sortResultsArrayList.clear();
+
                         String res = response.body().string();
                         try {
                             JSONObject bodyResponse = new JSONObject(res);
@@ -77,6 +85,9 @@ public class NetworkUtility{
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
+
+                        if(sortResultsArrayList.size() > 0)
+                            mDataCallBack.onEvent(sortResultsArrayList);
                     }
                 });
         return sortResultsArrayList;
@@ -100,4 +111,6 @@ public class NetworkUtility{
     public void setSortResultsArrayList(ArrayList<Movie> sortResultsArrayList) {
         this.sortResultsArrayList = sortResultsArrayList;
     }
+
+
 }

@@ -75,11 +75,13 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
             mCurrentMovie = movie;
         }
 
-
-
         void navigateToDetailActivity(Context mContext){
             Intent intent = new Intent(mContext, MovieDetail.class);
-            intent.putExtra("originalTitle", mCurrentMovie.getTitle());
+            intent.putExtra("original_title", mCurrentMovie.getTitle());
+            intent.putExtra("description", mCurrentMovie.getSynopsis());
+            intent.putExtra("poster", mCurrentMovie.getPosterImageLink());
+            intent.putExtra("user_rating", mCurrentMovie.getRating());
+            intent.putExtra("release_date", mCurrentMovie.getDate().toString());
             mContext.startActivity(intent);
         }
     }

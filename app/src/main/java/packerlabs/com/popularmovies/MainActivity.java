@@ -1,9 +1,10 @@
 package packerlabs.com.popularmovies;
 
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private GridLayoutManager mGridLayoutManager;
     private MovieRecyclerAdapter mMovieRecyclerAdapter;
     private ArrayList<Movie> mMovieList = new ArrayList<Movie>();
+
     private NetworkUtility networkUtility;
 
     @Override
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
         mGridLayoutManager = new GridLayoutManager(this, 3);
-
 
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mMovieRecyclerAdapter);
 
     }
+
+
 
     @Override
     public void onStart(){
@@ -52,13 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     void loadMovies(){
-        try {
             networkUtility = new NetworkUtility();
-            swapDataFromRecyclerView(networkUtility.getData());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            networkUtility.setCallBack(new NetworkUtility.OnDataCallBack() {
+                @Override
+                public void onEvent(ArrayList <Movie> movies) {
+                    swapDataFromRecyclerView(movies);
+                    Log.d("CallBack" , "Data Returned");
+                }
+            });
     }
 
     @Override
@@ -101,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
     void swapDataFromRecyclerView (ArrayList <Movie> newMovies) {
         mMovieList.clear();
         mMovieList.addAll(newMovies);
-        mMovieRecyclerAdapter.notifyDataSetChanged();
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMovieRecyclerAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
