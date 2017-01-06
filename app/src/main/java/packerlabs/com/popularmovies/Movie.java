@@ -12,6 +12,7 @@ public class Movie {
     String synopsis;
     String rating;
     Date date;
+    String posterImageURL;
 
     public Movie(String title, String posterImageLink, String synopsis, String rating, Date date) {
         this.title = title;
@@ -34,7 +35,11 @@ public class Movie {
     }
 
     public String getPosterImageLink() {
-        return "http://image.tmdb.org/t/p/w185/"+posterImageLink;
+        return posterImageLink;
+    }
+
+    public String getPosterImageURL () {
+        return "http://image.tmdb.org/t/p/w185/"+ posterImageLink;
     }
 
     public void setPosterImageLink(String posterImageLink) {

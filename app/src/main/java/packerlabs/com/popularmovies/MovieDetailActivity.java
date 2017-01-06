@@ -45,7 +45,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         int value = Math.round(Float.valueOf(mCurrentMovie.getRating()));
-        Picasso.with(this).load(mCurrentMovie.getPosterImageLink()).into(mMovieImage);
+        Picasso.with(this).load(mCurrentMovie.getPosterImageURL()).into(mMovieImage);
+
         mRatingBar.setMax(10);
         Log.d("Value", value+"");
         Log.d("Value", mCurrentMovie.getPosterImageLink());

@@ -48,15 +48,6 @@ public class MainActivity extends AppCompatActivity {
         loadMovies();
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-
-    }
-
-    private int getLastVisibleItemPosition() {
-        return mGridLayoutManager.findLastVisibleItemPosition();
-    }
 
     void loadMovies(){
         Log.d("Load Movies" , "Called");
