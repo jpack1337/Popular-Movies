@@ -31,14 +31,13 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
         mGridLayoutManager = new GridLayoutManager(this, 3);
 
-        //Update RecyclerView Column Count based on Orientation
-        //http://stackoverflow.com/questions/29579811/changing-number-of-columns-with-gridlayoutmanager-and-recyclerview
-        //Not sure if this is best case scenario or if I should set this in the dimensions layout, any thoughts?
+        //Update RecyclerView Column Count based on Screen Orientation
+        // http://stackoverflow.com/questions/29579811/changing-number-of-columns-with-gridlayoutmanager-and-recyclerview
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         }
         else{
-            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 5));
         }        mRecyclerView.setHasFixedSize(true);
 
         SpacesItemDecoration spacingDecoration = new SpacesItemDecoration(this, R.dimen.item_offset);
@@ -88,21 +87,26 @@ public class MainActivity extends AppCompatActivity {
             case R.id.highestRatingSort:
                 networkUtility.getDataForCategory("top_rated");
                 showSnackBar("Movies sorted by Top Rated");
+                getSupportActionBar().setTitle("Top Rated");
                 return true;
 
             case R.id.nowPlayingSort:
                 networkUtility.getDataForCategory("now_playing");
                 showSnackBar("Movies sorted by Now Playing");
+                getSupportActionBar().setTitle("Now Playing");
                 return true;
 
             case R.id.popularMoviesSort:
                 networkUtility.getDataForCategory("popular");
                 showSnackBar("Movies sorted by Most Popular");
+                getSupportActionBar().setTitle("Most Popular");
+
                 return true;
 
             case R.id.upcomingMoviesSort:
                 networkUtility.getDataForCategory("upcoming");
                 showSnackBar("Movies sorted by Upcoming");
+                getSupportActionBar().setTitle("Upcoming");
                 return true;
 
             default:
