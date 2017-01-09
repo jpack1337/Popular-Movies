@@ -21,10 +21,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MovieDetail"
-            android:label="@string/title_activity_movie_detail"
-            android:theme="@style/SplashTheme.NoActionBar" />
         <activity android:name=".MovieDetailActivity"></activity>
     </application>
 

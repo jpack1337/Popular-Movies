@@ -78,26 +78,26 @@ public class MainActivity extends AppCompatActivity {
             case R.id.highestRatingSort:
                 networkUtility.getDataForCategory("top_rated");
                 showSnackBar("Movies sorted by Top Rated");
-                getSupportActionBar().setTitle("Top Rated");
+                getSupportActionBar().setTitle("Top Rated Movies");
                 return true;
 
             case R.id.nowPlayingSort:
                 networkUtility.getDataForCategory("now_playing");
                 showSnackBar("Movies sorted by Now Playing");
-                getSupportActionBar().setTitle("Now Playing");
+                getSupportActionBar().setTitle("Now Playing Movies");
                 return true;
 
             case R.id.popularMoviesSort:
                 networkUtility.getDataForCategory("popular");
                 showSnackBar("Movies sorted by Most Popular");
-                getSupportActionBar().setTitle("Most Popular");
+                getSupportActionBar().setTitle("Most Popular Movies");
 
                 return true;
 
             case R.id.upcomingMoviesSort:
                 networkUtility.getDataForCategory("upcoming");
                 showSnackBar("Movies sorted by Upcoming");
-                getSupportActionBar().setTitle("Upcoming");
+                getSupportActionBar().setTitle("Upcoming Movies");
                 return true;
 
             default:

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MovieDetailActivity extends AppCompatActivity {
@@ -19,16 +20,18 @@ public class MovieDetailActivity extends AppCompatActivity {
     RatingBar mRatingBar;
     TextView mDescriptionText;
     TextView mReleaseDateText;
+    TextView mRatingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail2);
+        setContentView(R.layout.activity_movie_detail);
 
         mMovieImage = (ImageView) findViewById(R.id.moviePosterImageViewDetail);
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
         mDescriptionText = (TextView) findViewById(R.id.movieDescriptionTextView);
         mReleaseDateText = (TextView) findViewById(R.id.movieReleaseDate);
+        mRatingText = (TextView) findViewById(R.id.ratingText);
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("original_title");
@@ -36,7 +39,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         String description = intent.getStringExtra("description");
         String rating = intent.getStringExtra("user_rating");
         Date date = new Date(intent.getStringExtra("release_date"));
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
+        String displayDate = formatter.format(date);
 
         mCurrentMovie = new Movie(title, poster, description, rating, date);
 
@@ -52,7 +57,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         Log.d("Value", mCurrentMovie.getPosterImageLink());
         mRatingBar.setProgress(value);
         mDescriptionText.setText(mCurrentMovie.getSynopsis());
-        mReleaseDateText.setText(mCurrentMovie.getDate().toString());
+        mReleaseDateText.setText(displayDate);
+        String progress = mCurrentMovie.getRating() + "/" + mRatingBar.getMax();
+        mRatingText.setText(progress);
     }
 
     @Override
