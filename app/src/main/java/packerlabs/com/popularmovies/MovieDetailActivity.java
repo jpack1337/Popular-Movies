@@ -38,6 +38,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         String poster = intent.getStringExtra("poster");
         String description = intent.getStringExtra("description");
         String rating = intent.getStringExtra("user_rating");
+
         Date date = new Date(intent.getStringExtra("release_date"));
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -50,15 +51,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         int value = Math.round(Float.valueOf(mCurrentMovie.getRating()));
+        String progress = mCurrentMovie.getRating() + "/" + mRatingBar.getMax();
         Picasso.with(this).load(mCurrentMovie.getPosterImageURL()).into(mMovieImage);
 
         mRatingBar.setMax(10);
-        Log.d("Value", value+"");
-        Log.d("Value", mCurrentMovie.getPosterImageLink());
         mRatingBar.setProgress(value);
+        mRatingBar.setEnabled(false);
         mDescriptionText.setText(mCurrentMovie.getSynopsis());
         mReleaseDateText.setText(displayDate);
-        String progress = mCurrentMovie.getRating() + "/" + mRatingBar.getMax();
         mRatingText.setText(progress);
     }
 
