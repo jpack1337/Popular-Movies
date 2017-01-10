@@ -1,12 +1,10 @@
 package packerlabs.com.popularmovies;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -17,7 +15,6 @@ import java.util.Date;
 public class MovieDetailActivity extends AppCompatActivity {
     Movie mCurrentMovie;
     ImageView mMovieImage;
-    RatingBar mRatingBar;
     TextView mDescriptionText;
     TextView mReleaseDateText;
     TextView mRatingText;
@@ -28,7 +25,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
 
         mMovieImage = (ImageView) findViewById(R.id.moviePosterImageViewDetail);
-        mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
         mDescriptionText = (TextView) findViewById(R.id.movieDescriptionTextView);
         mReleaseDateText = (TextView) findViewById(R.id.movieReleaseDate);
         mRatingText = (TextView) findViewById(R.id.ratingText);
@@ -51,12 +47,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         int value = Math.round(Float.valueOf(mCurrentMovie.getRating()));
-        String progress = mCurrentMovie.getRating() + "/" + mRatingBar.getMax();
+        String progress = "("+mCurrentMovie.getRating() + " / 10)";
         Picasso.with(this).load(mCurrentMovie.getPosterImageURL()).into(mMovieImage);
 
-        mRatingBar.setMax(10);
-        mRatingBar.setProgress(value);
-        mRatingBar.setEnabled(false);
+
         mDescriptionText.setText(mCurrentMovie.getSynopsis());
         mReleaseDateText.setText(displayDate);
         mRatingText.setText(progress);
