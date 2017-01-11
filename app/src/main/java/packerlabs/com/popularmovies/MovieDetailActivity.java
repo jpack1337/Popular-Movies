@@ -50,9 +50,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         int value = Math.round(Float.valueOf(mCurrentMovie.getRating()));
         String progress = "("+mCurrentMovie.getRating() + " / 10)";
 
-        Log.d("PosterLink", mCurrentMovie.getPosterImageLink());
-        Log.d("PosterLink", mCurrentMovie.getPosterImageURL());
-
         Picasso.with(this)
                     .load(mCurrentMovie.getPosterImageURL())
                     .placeholder(R.drawable.placeholder_drawable)
