@@ -30,18 +30,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         mReleaseDateText = (TextView) findViewById(R.id.movieReleaseDate);
         mRatingText = (TextView) findViewById(R.id.ratingText);
 
-        Intent intent = getIntent();
-        String title = intent.getStringExtra("original_title");
-        String poster = intent.getStringExtra("poster");
-        String description = intent.getStringExtra("description");
-        String rating = intent.getStringExtra("user_rating");
+        Bundle data = getIntent().getExtras();
+        mCurrentMovie = (Movie) data.getParcelable("movie");
 
-        Date date = new Date(intent.getStringExtra("release_date"));
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
-        String displayDate = formatter.format(date);
-
-        mCurrentMovie = new Movie(title, poster, description, rating, date);
+        String displayDate = formatter.format(mCurrentMovie.getDate());
 
         getSupportActionBar().setTitle(mCurrentMovie.getTitle());
         getSupportActionBar().setHomeButtonEnabled(true);
