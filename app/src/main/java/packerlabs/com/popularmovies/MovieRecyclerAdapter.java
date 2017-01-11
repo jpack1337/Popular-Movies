@@ -32,7 +32,12 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     public void onBindViewHolder(MovieRecyclerAdapter.MovieHolder holder, int position) {
         Movie mMovie = mMovies.get(position);
         Context context = holder.mMovieImage.getContext();
-        Picasso.with(context).load(mMovie.getPosterImageURL()).into(holder.mMovieImage);
+        Picasso.with(context)
+                .load(mMovie.getPosterImageURL())
+                .placeholder(R.drawable.placeholder_drawable)
+                .error(R.drawable.frown)
+                .into(holder.mMovieImage);
+
         holder.bindMovie(mMovie);
     }
 

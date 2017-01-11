@@ -3,6 +3,7 @@ package packerlabs.com.popularmovies;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,7 +49,15 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         int value = Math.round(Float.valueOf(mCurrentMovie.getRating()));
         String progress = "("+mCurrentMovie.getRating() + " / 10)";
-        Picasso.with(this).load(mCurrentMovie.getPosterImageURL()).into(mMovieImage);
+
+        Log.d("PosterLink", mCurrentMovie.getPosterImageLink());
+        Log.d("PosterLink", mCurrentMovie.getPosterImageURL());
+
+        Picasso.with(this)
+                    .load(mCurrentMovie.getPosterImageURL())
+                    .placeholder(R.drawable.placeholder_drawable)
+                    .error(R.drawable.frown)
+                    .into(mMovieImage);
 
 
         mDescriptionText.setText(mCurrentMovie.getSynopsis());
