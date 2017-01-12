@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,9 +34,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         mCurrentMovie = (Movie) data.getParcelable("movie");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
-        String displayDate = formatter.format(mCurrentMovie.getDate());
+        mReleaseDateText.setText(mCurrentMovie.getDateString());
 
         getSupportActionBar().setTitle(mCurrentMovie.getTitle());
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -50,9 +50,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                     .error(R.drawable.frown)
                     .into(mMovieImage);
 
-
         mDescriptionText.setText(mCurrentMovie.getSynopsis());
-        mReleaseDateText.setText(displayDate);
         mRatingText.setText(progress);
     }
 

@@ -69,23 +69,17 @@ public class NetworkUtility {
                             for (int i = 0; i < sortResults.length(); i++) {
                                 JSONObject tempJSONMovie = sortResults.getJSONObject(i);
                                 Movie movie = new Movie();
-
-                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                Date releaseDate = dateFormat.parse(tempJSONMovie.getString("release_date"));
-
                                 movie.setTitle(tempJSONMovie.getString("original_title"));
                                 movie.setPosterImageLink(tempJSONMovie.getString("poster_path"));
                                 movie.setSynopsis(tempJSONMovie.getString("overview"));
                                 movie.setRating(tempJSONMovie.getString("vote_average"));
-                                movie.setDate(releaseDate);
+                                movie.setDateString(tempJSONMovie.getString("release_date"));
 
                                 sortResultsArrayList.add(movie);
-                                Log.d("Movie Added:", movie.getTitle());
+                                Log.d("Movie Added:", tempJSONMovie.get("release_date")+"");
                             }
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
 

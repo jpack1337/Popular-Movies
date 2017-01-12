@@ -3,8 +3,6 @@ package packerlabs.com.popularmovies;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
-
 /**
  * Created by AdminJpack on 12/30/16.
  */
@@ -14,19 +12,17 @@ public class Movie implements Parcelable {
     String posterImageLink;
     String synopsis;
     String rating;
-    Date date;
-    String posterImageURL;
+    String dateString;
 
-    public Movie(String title, String posterImageLink, String synopsis, String rating, Date date) {
+    public Movie(String title, String posterImageLink, String synopsis, String rating, String date) {
         this.title = title;
         this.posterImageLink = posterImageLink;
         this.synopsis = synopsis;
         this.rating = rating;
-        this.date = date;
+        this.dateString = date;
     }
 
     public Movie(){
-
     }
 
     public Movie(Parcel inputParcel) {
@@ -36,7 +32,7 @@ public class Movie implements Parcelable {
         this.posterImageLink = data[1];
         this.synopsis = data[2];
         this.rating = data[3];
-        this.date = new Date(data[4]);
+        this.dateString = data[4];
     }
 
     public String getTitle() {
@@ -75,12 +71,12 @@ public class Movie implements Parcelable {
         this.rating = rating;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDateString() {
+        return dateString;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
     }
 
     /* Parceable Implementation */
@@ -91,7 +87,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeStringArray(new String[]{this.title, this.posterImageLink, this.synopsis, this.rating, this.date.toString()});
+        parcel.writeStringArray(new String[]{this.title, this.posterImageLink, this.synopsis, this.rating, this.dateString});
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
