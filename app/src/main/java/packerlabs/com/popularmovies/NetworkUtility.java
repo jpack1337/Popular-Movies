@@ -28,9 +28,11 @@ public class NetworkUtility {
 
     //TODO Add Your Own API Key
     //www.themodiedb.org
-    String APIKey = "";
+    String APIKey = "ea4c651a09961d8d50e27ff0b17ed370";
     String URL = String.format("http://api.themoviedb.org/3/movie/%s?api_key=%s", "upcoming", APIKey);
+
     ArrayList <Movie> sortResultsArrayList = new ArrayList<>();
+    ArrayList <Movie> movieTrailers = new ArrayList<>();
     OnDataCallBack mDataCallBack;
 
 
@@ -45,7 +47,34 @@ public class NetworkUtility {
         public void onEvent(ArrayList<Movie> list);
     }
 
-    ArrayList<Movie> getData () throws IOException{
+    /* Method to retrieve trailers by Movie ID */
+    ArrayList<Movie> getTrailersForMovie(String movieId) throws  IOException {
+        String URL = String.format("http://api.themoviedb.org/3/movie/%s/videos/?api_key=%s", movieId, APIKey);
+
+        Request request = new Request.Builder()
+                .url(URL)
+                .build();
+
+        client.newCall(request)
+                .enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if(movieTrailers.size() > 0) movieTrailers.clear();
+
+
+                    }
+                });
+
+        return movieTrailers;
+    }
+
+    /* Method to retrieve all Movies */
+    ArrayList<Movie> getMovies () throws IOException{
         Log.d("Get Data", "Called");
         Request request = new Request.Builder()
                 .url(this.URL)
@@ -94,7 +123,7 @@ public class NetworkUtility {
     public void getDataForCategory(String sortCategory){
         this.URL = String.format("http://api.themoviedb.org/3/movie/%s?api_key=%s", sortCategory, APIKey);
         try {
-            getData();
+            getMovies();
         } catch (IOException e) {
             e.printStackTrace();
         }

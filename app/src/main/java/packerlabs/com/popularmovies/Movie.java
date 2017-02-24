@@ -13,26 +13,29 @@ public class Movie implements Parcelable {
     String synopsis;
     String rating;
     String dateString;
+    String movieID;
 
-    public Movie(String title, String posterImageLink, String synopsis, String rating, String date) {
+    public Movie(String title, String posterImageLink, String synopsis, String rating, String date, String id) {
         this.title = title;
         this.posterImageLink = posterImageLink;
         this.synopsis = synopsis;
         this.rating = rating;
         this.dateString = date;
+        this.movieID = id;
     }
 
     public Movie(){
     }
 
     public Movie(Parcel inputParcel) {
-        String[] data = new String[5];
+        String[] data = new String[6];
         inputParcel.readStringArray(data);
         this.title = data[0];
         this.posterImageLink = data[1];
         this.synopsis = data[2];
         this.rating = data[3];
         this.dateString = data[4];
+        this.movieID = data[5];
     }
 
     public String getTitle() {
@@ -53,6 +56,14 @@ public class Movie implements Parcelable {
 
     public void setPosterImageLink(String posterImageLink) {
         this.posterImageLink = posterImageLink;
+    }
+
+    public String getMovieID() {
+        return movieID;
+    }
+
+    public void setMovieID(String movieID) {
+        this.movieID = movieID;
     }
 
     public String getSynopsis() {
@@ -87,7 +98,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeStringArray(new String[]{this.title, this.posterImageLink, this.synopsis, this.rating, this.dateString});
+        parcel.writeStringArray(new String[]{this.title, this.posterImageLink, this.synopsis, this.rating, this.dateString, this.movieID});
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

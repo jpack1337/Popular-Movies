@@ -83,7 +83,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 
         void navigateToDetailActivity(Context mContext){
             Intent intent = new Intent(mContext, MovieDetailActivity.class);
-            intent.putExtra("movie", new Movie(mCurrentMovie.getTitle(), mCurrentMovie.getPosterImageLink(), mCurrentMovie.getSynopsis(),  mCurrentMovie.getRating(), mCurrentMovie.getDateString()));
+            intent.putExtra("movie", new Movie(mCurrentMovie.getTitle(), mCurrentMovie.getPosterImageLink(), mCurrentMovie.getSynopsis(),  mCurrentMovie.getRating(), mCurrentMovie.getDateString(), mCurrentMovie.getMovieID()));
             mContext.startActivity(intent);
         }
     }
