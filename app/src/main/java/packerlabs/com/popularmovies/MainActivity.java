@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         networkUtility = new NetworkUtility();
         networkUtility.getDataForCategory("now_playing");
-        networkUtility.setCallBack(new NetworkUtility.OnDataCallBack() {
+        networkUtility.setCallBack(new NetworkUtility.OnMovieDataCallBack() {
                 @Override
                 public void onEvent(ArrayList <Movie> movies) {
                     swapDataFromRecyclerView(movies);

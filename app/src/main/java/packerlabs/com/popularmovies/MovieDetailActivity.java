@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -36,7 +37,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     Context mContext;
     LinearLayout mTopButtonLayouts;
     PMHelperMethods pmHelperMethods;
-    int mTopLayoutSize = 0;
+    RelativeLayout mDescCard, mReleaseCard;
+    int mTopLayoutSize = 0, mDescCardSize, mReleaseCardSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +50,25 @@ public class MovieDetailActivity extends AppCompatActivity {
         mDescriptionText = (TextView) findViewById(R.id.movieDescriptionTextView);
         mReleaseDateText = (TextView) findViewById(R.id.movieReleaseDate);
         mRatingText = (TextView) findViewById(R.id.ratingText);
+
+        mDescCard = (RelativeLayout) findViewById(R.id.desc_relative);
+        mReleaseCard = (RelativeLayout) findViewById(R.id.release_relative);
+
         mBackdropImage = (ImageView) findViewById(R.id.bgimage);
         mTopButtonLayouts = (LinearLayout) findViewById(R.id.topbutton_nav);
+
         mTopLayoutSize = mTopButtonLayouts.getLayoutParams().height;
+        mDescCardSize = mDescCard.getLayoutParams().height;
+        mReleaseCardSize = mReleaseCard.getLayoutParams().height;
         pmHelperMethods = new PMHelperMethods();
 
-        pmHelperMethods.collapse(mTopButtonLayouts, 500, 0);
-        pmHelperMethods.expand(mTopButtonLayouts, 1000, mTopLayoutSize);
+        pmHelperMethods.expand(mTopButtonLayouts, 500, mTopLayoutSize);
+     //   pmHelperMethods.expand(mDescCard, 500, mDescCardSize);
+       // pmHelperMethods.expand(mReleaseCard, 500, mReleaseCardSize);
+
         BlurBuilder blurBuilder = new BlurBuilder();
         Bundle data = getIntent().getExtras();
         mCurrentMovie = (Movie) data.getParcelable("movie");
-
 
         mReleaseDateText.setText(mCurrentMovie.getDateString());
 
@@ -106,6 +116,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         });
 
         loadTrailers();
+        loadReviews();
     }
 
     void loadTrailers(){
@@ -117,11 +128,27 @@ public class MovieDetailActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        networkUtility.setCallBack(new NetworkUtility.OnDataCallBack() {
+        networkUtility.setCallBack(new NetworkUtility.OnTrailersDataCallBack() {
             @Override
-            public void onEvent(ArrayList<Movie> movies) {
-                swapDataFromRecyclerView(movies);
-                Log.d("CallBack" , movies.size() +" trailers returned");
+            public void onEvent(ArrayList<Trailers> trailers) {
+                Log.d("CallBack" , trailers.size() +" trailers returned");
+            }
+        });
+    }
+
+    void loadReviews(){
+        Log.d("Load Reviews" , "Called");
+
+        networkUtility = new NetworkUtility();
+        try {
+            networkUtility.getReviewsForMovie(mCurrentMovie.getMovieID());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        networkUtility.setCallBack(new NetworkUtility.OnReviewsDataCallBack() {
+            @Override
+            public void onEvent(ArrayList<Reviews> reviews) {
+                Log.d("CallBack" , reviews.size() +" reviews returned");
             }
         });
     }

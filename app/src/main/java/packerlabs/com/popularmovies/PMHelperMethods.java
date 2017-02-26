@@ -13,11 +13,8 @@ import android.view.animation.Transformation;
 
 public class PMHelperMethods {
 
-    //author
     //http://stackoverflow.com/questions/4946295/android-expand-collapse-animation
-
     public static void expand(final View v, int duration, int targetHeight) {
-
 
         int prevHeight  = v.getHeight();
 
@@ -34,7 +31,6 @@ public class PMHelperMethods {
         valueAnimator.setDuration(duration);
         valueAnimator.start();
     }
-
     public static void collapse(final View v, int duration, int targetHeight) {
         int prevHeight  = v.getHeight();
         ValueAnimator valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight);

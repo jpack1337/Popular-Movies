@@ -5,4 +5,11 @@
     <string name="title_activity_movie_detail">Loading Movie...</string>
     <string name="movie_desc_filler">This is a test description of what a description should look like if data is loaded.</string>
     <string name="movie_release_date_filler">12/31/2017</string>
+
+
+    <string name="menu_popular_text">Showing popular movies...</string>
+    <string name="menu_favorited_text">Showing favorited movies...</string>
+    <string name="menu_now_playing_text">Showing movies playing now...</string>
+    <string name="menu_upcoming_text">Showing movies coming soon...</string>
+    <string name="menu_now_highest_rated_text">Showing highest rated movies...</string>
 </resources>
