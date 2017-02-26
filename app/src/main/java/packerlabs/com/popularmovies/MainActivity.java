@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
         mGridLayoutManager = new GridLayoutManager(this, 3);
 
-        //Update RecyclerView Column Count based on Screen Orientation
-        // http://stackoverflow.com/questions/29579811/changing-number-of-columns-with-gridlayoutmanager-and-recyclerview
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         }
@@ -77,26 +75,26 @@ public class MainActivity extends AppCompatActivity {
             case R.id.highestRatingSort:
                 networkUtility.getDataForCategory("top_rated");
                 showSnackBar("Movies sorted by Top Rated");
-                getSupportActionBar().setTitle("Top Rated Movies");
+                getSupportActionBar().setTitle(getResources().getString(R.string.menu_toprated_title));
                 return true;
 
             case R.id.nowPlayingSort:
                 networkUtility.getDataForCategory("now_playing");
                 showSnackBar("Movies sorted by Now Playing");
-                getSupportActionBar().setTitle("Now Playing Movies");
+                getSupportActionBar().setTitle(getResources().getString(R.string.menu_nowplaying_title));
                 return true;
 
             case R.id.popularMoviesSort:
                 networkUtility.getDataForCategory("popular");
                 showSnackBar("Movies sorted by Most Popular");
-                getSupportActionBar().setTitle("Most Popular Movies");
+                getSupportActionBar().setTitle(getResources().getString(R.string.menu_mostpopular_title));
 
                 return true;
 
             case R.id.upcomingMoviesSort:
                 networkUtility.getDataForCategory("upcoming");
                 showSnackBar("Movies sorted by Upcoming");
-                getSupportActionBar().setTitle("Upcoming Movies");
+                getSupportActionBar().setTitle(getResources().getString(R.string.menu_upcoming_title));
                 return true;
 
             default:

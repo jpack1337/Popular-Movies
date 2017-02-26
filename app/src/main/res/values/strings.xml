@@ -7,6 +7,12 @@
     <string name="movie_release_date_filler">12/31/2017</string>
 
 
+    <string name="menu_toprated_title">Top Rated Movies</string>
+    <string name="menu_mostpopular_title">Most Popular Movies</string>
+    <string name="menu_upcoming_title">Movies Coming Soon</string>
+    <string name="menu_nowplaying_title">Now Playing Movies</string>
+
+
     <string name="menu_popular_text">Showing popular movies...</string>
     <string name="menu_favorited_text">Showing favorited movies...</string>
     <string name="menu_now_playing_text">Showing movies playing now...</string>

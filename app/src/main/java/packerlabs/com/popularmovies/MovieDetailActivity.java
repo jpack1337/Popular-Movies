@@ -105,23 +105,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         mDescriptionText.setText(mCurrentMovie.getSynopsis());
         mRatingText.setText(progress);
 
-        mMovieImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse("file://" + "/sdcard/test.jpg"), "image/*");
-                startActivity(intent);
-            }
-        });
-
         loadTrailers();
         loadReviews();
     }
 
     void loadTrailers(){
-        Log.d("Load Trailers" , "Called");
-
         networkUtility = new NetworkUtility();
         try {
             networkUtility.getTrailersForMovie(mCurrentMovie.getMovieID());
@@ -137,8 +125,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     void loadReviews(){
-        Log.d("Load Reviews" , "Called");
-
         networkUtility = new NetworkUtility();
         try {
             networkUtility.getReviewsForMovie(mCurrentMovie.getMovieID());
