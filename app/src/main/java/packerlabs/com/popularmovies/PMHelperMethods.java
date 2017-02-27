@@ -31,6 +31,7 @@ public class PMHelperMethods {
         valueAnimator.setDuration(duration);
         valueAnimator.start();
     }
+
     public static void collapse(final View v, int duration, int targetHeight) {
         int prevHeight  = v.getHeight();
         ValueAnimator valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight);

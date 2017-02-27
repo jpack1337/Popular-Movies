@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_height="100dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="0dp"
+    android:layout_margin="0dp"
+    android:layout_width="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+
+    <ImageView android:id="@+id/mTrailerImage"
+        android:adjustViewBounds="true"
+        android:layout_height="100dp"
+        android:layout_width="75dp" />
+
+    <Button android:id="@+id/shareBtn"
+        android:layout_height="33dp"
+        android:background="@android:drawable/ic_menu_share"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_width="33dp"
+        android:layout_marginRight="16dp" />
+
+        <TextView android:id="@+id/trailerNameTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trailer Name"
+            android:maxLines="2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/mTrailerImage"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/white"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap To Watch Now!"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_alignBottom="@+id/shareBtn"
+            android:layout_alignStart="@+id/trailerNameTxt"
+            android:layout_toStartOf="@+id/shareBtn" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

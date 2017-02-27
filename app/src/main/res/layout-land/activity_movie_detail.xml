@@ -9,16 +9,97 @@
     android:background="@color/colorPrimary"
     tools:context="packerlabs.com.popularmovies.MovieDetailActivity">
 
+    <android.support.v7.widget.RecyclerView android:id="@+id/RecyclerViewDetail"
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="@color/black"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:padding="16dp"
+        android:layout_weight="3"
+        android:elevation="13dp">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView android:id="@+id/bgimage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="0dp"
+        android:alpha=".66"
+        android:scaleType="fitStart"
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:id="@+id/topbutton_nav"
+        android:layout_height="50dp">
+
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Favorite"
+            android:background="@color/black"
+            android:layout_weight="1"
+
+            android:drawableLeft="@drawable/star"
+            android:layout_alignTop="@+id/moviePosterImageViewDetail"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:layout_toEndOf="@+id/moviePosterImageViewDetail"
+            android:padding="16dp"
+            android:id="@+id/favoriteBtn" />
+
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="View Trailers"
+            android:drawableLeft="@drawable/play"
+            android:layout_above="@+id/ratingText"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:layout_toEndOf="@+id/moviePosterImageViewDetail"
+            android:background="@color/black"
+            android:id="@+id/watch_trailer_btn"
+            android:padding="16dp" />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="See Reviews"
+            android:drawableLeft="@drawable/comment"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:background="@color/black"
+            android:textSize="10sp"
+            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/moviePosterImageViewDetail"
+            android:id="@+id/see_reviews_btn"
+            android:padding="16dp" />
+
+    </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="3"
+        android:layout_marginTop="50dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:layout_weight="3">
 
             <ImageView android:id="@+id/moviePosterImageViewDetail"
                 android:layout_width="150dp"
@@ -39,12 +120,13 @@
 
         </RelativeLayout>
 
-        <ScrollView
+        <ScrollView android:id="@+id/scrollView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="2"
+            android:layout_height="match_parent">
+
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="10dp">
 
@@ -54,10 +136,8 @@
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="1dp"
             app:cardElevation="0dp"
-            android:layout_width="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp">
+            android:layout_width="wrap_content"
+                android:layout_marginRight="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +149,7 @@
             android:padding="5dp" />
 
             <TextView android:id="@+id/movieDescriptionTextView"
-                   android:layout_width="match_parent"
+                   android:layout_width="432dp"
                    android:layout_height="104dp"
                    android:text="@string/movie_desc_filler"
                    android:layout_marginTop="20dp"
@@ -108,8 +188,14 @@
 
             </android.support.v7.widget.CardView>
 
+
         </RelativeLayout>
+
+
+
         </ScrollView>
+
+
     </LinearLayout>
 
 </FrameLayout>
