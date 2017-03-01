@@ -1,6 +1,8 @@
 package packerlabs.com.popularmovies;
 
+import android.content.ContentValues;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         mMovieRecyclerAdapter = new MovieRecyclerAdapter(mMovieList);
         mRecyclerView.setAdapter(mMovieRecyclerAdapter);
+
         loadMovies();
     }
 

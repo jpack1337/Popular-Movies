@@ -1,8 +1,10 @@
 package packerlabs.com.popularmovies;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -60,6 +62,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     LinearLayoutManager llm = new LinearLayoutManager(this);
     int viewHeight = 0;
     ScrollView mScrollView;
+    boolean isMovieFavorited = false;
+    MoviesDBHelper moviesDBHelper;
 
     boolean isTrailersMenuOpen, isReviewsMenuOpen;
     View parentLayout;
@@ -100,12 +104,15 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         mTopLayoutSize = mTopButtonLayouts.getLayoutParams().height;
         pmHelperMethods = new PMHelperMethods();
+
+        moviesDBHelper = new MoviesDBHelper(getApplicationContext());
+
         mTopButtonLayouts.setAlpha(0.80F);
 
         pmHelperMethods.expand(mTopButtonLayouts, 500, mTopLayoutSize);
 
         Bundle data = getIntent().getExtras();
-        mCurrentMovie = (Movie) data.getParcelable("movie");
+        mCurrentMovie = data.getParcelable("movie");
         mReleaseDateText.setText(mCurrentMovie.getDateString());
 
         getSupportActionBar().setTitle(mCurrentMovie.getTitle());
@@ -148,7 +155,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         mFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MovieProvider provider = new MovieProvider();
 
+              //  if (isMovieFavorited) {
+                    provider.insert(provider.CONTENT_URI, mCurrentMovie.toContentValues());
+                    isMovieFavorited = true;
+
+//                } else {
+//                    String selection = MoviesContract.MovieEntry.COLUMN_MOVIE_ID + "=";
+//                    String[] selectionArgs = {mCurrentMovie.getMovieID()};
+//                    provider.delete(null, selection, selectionArgs);
+//                    isMovieFavorited = false;
+//
+//                }
             }
         });
 
@@ -207,6 +226,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         loadTrailers();
         loadReviews();
     }
+
+
+
 
     void loadTrailers() {
         networkUtility = new NetworkUtility();

@@ -1,7 +1,9 @@
 package packerlabs.com.popularmovies;
 
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by AdminJpack on 12/30/16.
@@ -14,6 +16,7 @@ public class Movie implements Parcelable {
     String rating;
     String dateString;
     String movieID;
+
 
     public Movie(String title, String posterImageLink, String synopsis, String rating, String date, String id) {
         this.title = title;
@@ -36,6 +39,18 @@ public class Movie implements Parcelable {
         this.rating = data[3];
         this.dateString = data[4];
         this.movieID = data[5];
+    }
+
+    ContentValues toContentValues(){
+        ContentValues values = new ContentValues();
+        values.put(MoviesContract.MovieEntry.COLUMN_MOVIE_TITLE, this.getTitle());
+        values.put(MoviesContract.MovieEntry.COLUMN_MOVIE_ID,this.getMovieID());
+        values.put(MoviesContract.MovieEntry.COLUMN_IMAGE_URL, this.getPosterImageURL());
+        values.put(MoviesContract.MovieEntry.COLUMN_PLOT, this.getSynopsis());
+        values.put(MoviesContract.MovieEntry.COLUMN_RATING, this.getRating());
+        values.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, this.getDateString());
+        Log.d("toContentValues", values.toString());
+        return values;
     }
 
     public String getTitle() {
@@ -110,5 +125,7 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+
 };
 

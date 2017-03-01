@@ -22,6 +22,15 @@
         </activity>
 
         <activity android:name=".MovieDetailActivity"></activity>
+
+        <provider
+            android:name=".MovieProvider"
+            android:authorities="packerlabs.com.popularmovies"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:label="MovieProviders"
+            android:readPermission="packerlabs.com.popularmovies.READ"
+            android:writePermission="packerlabs.com.popularmovies.WRITE" />
     </application>
 
 </manifest>
