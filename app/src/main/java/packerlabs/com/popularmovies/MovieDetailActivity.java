@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -53,7 +54,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     LinearLayout mTopButtonLayouts;
     PMHelperMethods pmHelperMethods;
     RelativeLayout mDescCard, mReleaseCard;
-    Button mFavoriteBtn, mTrailersBtn, mReviewBtn;
+    Button mTrailersBtn, mReviewBtn;
+    ToggleButton mFavoriteBtn;
     int mTopLayoutSize = 0, mDescCardSize, mReleaseCardSize;
     RecyclerView mRecyvlerViewTemp;
     TrailersRecyclerAdapter trailersRecyclerAdapter;
@@ -93,7 +95,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         mDescCard = (RelativeLayout) findViewById(R.id.desc_relative);
         mReleaseCard = (RelativeLayout) findViewById(R.id.release_relative);
 
-        mFavoriteBtn = (Button) findViewById(R.id.favoriteBtn);
+        mFavoriteBtn = (ToggleButton) findViewById(R.id.favoriteBtn);
         mTrailersBtn = (Button) findViewById(R.id.watch_trailer_btn);
         mReviewBtn = (Button) findViewById(R.id.see_reviews_btn);
 
@@ -122,12 +124,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         int value = Math.round(Float.valueOf(mCurrentMovie.getRating()));
         String progress = "This movie earned a " + mCurrentMovie.getRating() + " out of 10";
 
-        /* Can't seem to get image to be full width on Landscape, so were hiding it here :( */
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-        }else{
-            mBackdropImage.setVisibility(View.GONE);
-        }
-
         Picasso.with(this)
                 .load(mCurrentMovie.getPosterImageURL())
                 .placeholder(R.drawable.placeholder_drawable)
@@ -138,7 +134,6 @@ public class MovieDetailActivity extends AppCompatActivity {
                         mMovieImage.setImageBitmap(bitmap);
                         Bitmap blurredBitmap = BlurBuilder.blur(mContext, bitmap);
                         mBackdropImage.setImageBitmap(blurredBitmap);
-
                     }
 
                     @Override
@@ -155,19 +150,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         mFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieProvider provider = new MovieProvider();
 
-              //  if (isMovieFavorited) {
-                    provider.insert(provider.CONTENT_URI, mCurrentMovie.toContentValues());
+                if (!isMovieFavorited) {
+                    getContentResolver().insert(MovieProvider.CONTENT_URI,mCurrentMovie.toContentValues());
                     isMovieFavorited = true;
 
-//                } else {
-//                    String selection = MoviesContract.MovieEntry.COLUMN_MOVIE_ID + "=";
-//                    String[] selectionArgs = {mCurrentMovie.getMovieID()};
-//                    provider.delete(null, selection, selectionArgs);
-//                    isMovieFavorited = false;
-//
-//                }
+                } else {
+                    String selection = MoviesContract.MovieEntry.COLUMN_MOVIE_ID + " = "+mCurrentMovie.getMovieID();
+                    getContentResolver().delete(MovieProvider.CONTENT_URI, selection, null);
+                    isMovieFavorited = false;
+
+                    Log.d("Movie Removed", "Yes");
+                }
+                mFavoriteBtn.setChecked(isMovieFavorited);
             }
         });
 

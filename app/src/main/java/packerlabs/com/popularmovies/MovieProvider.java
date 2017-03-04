@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.net.URI;
 
@@ -79,12 +80,15 @@ public class MovieProvider extends ContentProvider {
         long newRowId = db.insert(MoviesContract.MovieEntry.TABLE_NAME, null, values);
         getContext().getContentResolver().notifyChange(uri, null);
 
+        Log.d("Inserted", values.toString());
         return Uri.parse(CONTENT_URI + "/" + newRowId);
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         db.delete(MoviesContract.MovieEntry.TABLE_NAME, selection, selectionArgs);
+        getContext().getContentResolver().notifyChange(uri, null);
+
         return 0;
     }
 

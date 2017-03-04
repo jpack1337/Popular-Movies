@@ -25,7 +25,7 @@
 
         <provider
             android:name=".MovieProvider"
-            android:authorities="packerlabs.com.popularmovies"
+            android:authorities="packerlabs.com.popularmovies.MovieProvider"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="MovieProviders"
