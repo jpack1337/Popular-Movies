@@ -66,7 +66,10 @@ public class Movie implements Parcelable {
     }
 
     public String getPosterImageURL() {
-        return "http://image.tmdb.org/t/p/w185/" + posterImageLink;
+        if(posterImageLink.contains("http"))
+            return posterImageLink;
+        else
+            return "http://image.tmdb.org/t/p/w185"+posterImageLink;
     }
 
     public void setPosterImageLink(String posterImageLink) {
@@ -127,5 +130,5 @@ public class Movie implements Parcelable {
     };
 
 
-};
+}
 

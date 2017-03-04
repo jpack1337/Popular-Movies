@@ -67,6 +67,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     boolean isMovieFavorited = false;
     MoviesDBHelper moviesDBHelper;
 
+    boolean isOnline = false;
+
     boolean isTrailersMenuOpen, isReviewsMenuOpen;
     View parentLayout;
     int mTrailersHeight, mReviewsHeight;
@@ -103,15 +105,15 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         mBackdropImage = (ImageView) findViewById(R.id.bgimage);
         mTopButtonLayouts = (LinearLayout) findViewById(R.id.topbutton_nav);
-
         mTopLayoutSize = mTopButtonLayouts.getLayoutParams().height;
-        pmHelperMethods = new PMHelperMethods();
 
+        pmHelperMethods = new PMHelperMethods();
+        isOnline = pmHelperMethods.isNetworkAvailable(getApplicationContext());
         moviesDBHelper = new MoviesDBHelper(getApplicationContext());
 
         mTopButtonLayouts.setAlpha(0.80F);
 
-        pmHelperMethods.expand(mTopButtonLayouts, 500, mTopLayoutSize);
+        PMHelperMethods.expand(mTopButtonLayouts, 500, mTopLayoutSize);
 
         Bundle data = getIntent().getExtras();
         mCurrentMovie = data.getParcelable("movie");
@@ -170,47 +172,58 @@ public class MovieDetailActivity extends AppCompatActivity {
         mTrailersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportActionBar().hide();
-                mTrailersBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                mReviewBtn.setBackgroundColor(getResources().getColor(R.color.black));
-                mTopButtonLayouts.setAlpha(1.0F);
-                isTrailersMenuOpen = true;
-                trailersRecyclerAdapter = new TrailersRecyclerAdapter(mTrailersArray);
-                trailersRecyclerAdapter.setmCurrentMovie(mCurrentMovie);
 
-                mRecyvlerViewTemp.setLayoutManager(llm);
-                mRecyvlerViewTemp.setAdapter(trailersRecyclerAdapter);
-                mRecyvlerViewTemp.setVisibility(View.VISIBLE);
-
-                Log.d("Height", mScrollView.getHeight()+"");
-                if(mRecyvlerViewTemp.getHeight() == 1)
-                    PMHelperMethods.expand(mRecyvlerViewTemp, 500, mScrollView.getHeight());
-            }
-        });
-
-        mReviewBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (mReviewsArray.size() > 0) {
+                if (isOnline) {
                     getSupportActionBar().hide();
-                    mReviewBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    mTrailersBtn.setBackgroundColor(getResources().getColor(R.color.black));
-                    isReviewsMenuOpen = true;
+                    mTrailersBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    mReviewBtn.setBackgroundColor(getResources().getColor(R.color.black));
                     mTopButtonLayouts.setAlpha(1.0F);
-                    reviewsRecylerAdapter = new ReviewsRecyclerAdapter(mReviewsArray);
-                    reviewsRecylerAdapter.setmCurrentMovie(mCurrentMovie);
+                    isTrailersMenuOpen = true;
+                    trailersRecyclerAdapter = new TrailersRecyclerAdapter(mTrailersArray);
+                    trailersRecyclerAdapter.setmCurrentMovie(mCurrentMovie);
 
                     mRecyvlerViewTemp.setLayoutManager(llm);
-                    mRecyvlerViewTemp.setAdapter(reviewsRecylerAdapter);
+                    mRecyvlerViewTemp.setAdapter(trailersRecyclerAdapter);
                     mRecyvlerViewTemp.setVisibility(View.VISIBLE);
 
                     Log.d("Height", mScrollView.getHeight() + "");
                     if (mRecyvlerViewTemp.getHeight() == 1)
                         PMHelperMethods.expand(mRecyvlerViewTemp, 500, mScrollView.getHeight());
+
+                    } else {
+                    showSnackBar("Go online to see trailers for " + mCurrentMovie.getTitle());
+                    }
+                }
+            });
+
+
+        mReviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isOnline) {
+                    if (mReviewsArray.size() > 0) {
+                        getSupportActionBar().hide();
+                        mReviewBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                        mTrailersBtn.setBackgroundColor(getResources().getColor(R.color.black));
+                        isReviewsMenuOpen = true;
+                        mTopButtonLayouts.setAlpha(1.0F);
+                        reviewsRecylerAdapter = new ReviewsRecyclerAdapter(mReviewsArray);
+                        reviewsRecylerAdapter.setmCurrentMovie(mCurrentMovie);
+
+                        mRecyvlerViewTemp.setLayoutManager(llm);
+                        mRecyvlerViewTemp.setAdapter(reviewsRecylerAdapter);
+                        mRecyvlerViewTemp.setVisibility(View.VISIBLE);
+
+                        Log.d("Height", mScrollView.getHeight() + "");
+                        if (mRecyvlerViewTemp.getHeight() == 1)
+                            PMHelperMethods.expand(mRecyvlerViewTemp, 500, mScrollView.getHeight());
+                    } else {
+                        showSnackBar("No Reviews Available");
+                        Log.d("Reviews", "NONE");
+                    }
                 }else{
-                    showSnackBar("No Reviews Available");
-                    Log.d("Reviews", "NONE");
+                    showSnackBar("Go online to see reviews for "+mCurrentMovie.getTitle());
                 }
             }
         });

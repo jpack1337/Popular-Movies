@@ -108,10 +108,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
                 null                                 // The sort order
         );
 
-        if (!(cursor.moveToFirst()) || cursor.getCount() ==0)
-            isFavorited = false;
-        else
-            isFavorited = true;
+        isFavorited = !(!(cursor.moveToFirst()) || cursor.getCount() == 0);
 
         cursor.close();
         Log.d("Movie", isFavorited+"");

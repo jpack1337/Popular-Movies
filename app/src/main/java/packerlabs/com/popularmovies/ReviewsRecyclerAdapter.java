@@ -39,7 +39,7 @@ public class ReviewsRecyclerAdapter extends RecyclerView.Adapter<ReviewsRecycler
     }
 
     public void setmCurrentMovie(Movie mCurrentMovie) {
-        this.mCurrentMovie = mCurrentMovie;
+        ReviewsRecyclerAdapter.mCurrentMovie = mCurrentMovie;
     }
 
     @Override

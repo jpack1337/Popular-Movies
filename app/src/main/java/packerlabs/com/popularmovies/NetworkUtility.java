@@ -43,6 +43,13 @@ public class NetworkUtility {
     public NetworkUtility() {
     }
 
+    static public class ENDPOINTS {
+        static public String TOP_RATED = "top_rated";
+        static public String MOST_POPULAR = "popular";
+        static public String NOW_PLAYING = "now_playing";
+        static public String UPCOMING = "upcoming";
+    }
+
     /* Callbacks */
 
 
@@ -60,15 +67,15 @@ public class NetworkUtility {
 
 
     public interface OnMovieDataCallBack {
-        public void onEvent(ArrayList<Movie> list);
+        void onEvent(ArrayList<Movie> list);
     }
 
     public interface OnReviewsDataCallBack {
-        public void onEvent(ArrayList<Reviews> list);
+        void onEvent(ArrayList<Reviews> list);
     }
 
     public interface OnTrailersDataCallBack {
-        public void onEvent(ArrayList<Trailers> list);
+        void onEvent(ArrayList<Trailers> list);
     }
 
     /* Method to retrieve reviews by Movie ID */

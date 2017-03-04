@@ -22,7 +22,7 @@ public class MovieProvider extends ContentProvider {
     // Creates a UriMatcher object.
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     private static final String AUTHORITY = "packerlabs.com.popularmovies.MovieProvider";
-
+    private int MOVIES = 1;
     public static final Uri CONTENT_URI =
             Uri.parse("content://" + AUTHORITY + "/movies");
 
@@ -32,9 +32,6 @@ public class MovieProvider extends ContentProvider {
     }
 
     private MoviesDBHelper mOpenHelper;
-
-    // Defines the database name
-    private static final String DBNAME = "movies";
 
     // Holds the database object
     private SQLiteDatabase db;
@@ -54,17 +51,28 @@ public class MovieProvider extends ContentProvider {
             String[] selectionArgs,
             String sortOrder) {
 
-        switch (sUriMatcher.match(uri)) {
+        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        int match = sUriMatcher.match(uri);
+        Cursor refCursor = null;
+
+        switch (match) {
             case 1:
-                if (TextUtils.isEmpty(sortOrder)) sortOrder = "_ID ASC";
+                refCursor = db.query(MoviesContract.MovieEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
                 break;
 
             default:
                 break;
-            // If the URI is not recognized, you should do some error handling here.
         }
+
+        refCursor.setNotificationUri(getContext().getContentResolver(), uri);
         // call the code to actually do the query
-        return null;
+        return refCursor;
     }
 
     @Nullable

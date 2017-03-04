@@ -41,7 +41,7 @@ public class TrailersRecyclerAdapter extends RecyclerView.Adapter<TrailersRecycl
     }
 
     public void setmCurrentMovie(Movie mCurrentMovie) {
-        this.mCurrentMovie = mCurrentMovie;
+        TrailersRecyclerAdapter.mCurrentMovie = mCurrentMovie;
     }
 
     @Override
