@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="16dp"
+        android:left="16dp"
+        android:top="16dp">
+
+        <selector xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- When selected, use grey -->
+            <item android:drawable="@drawable/ic_star_border_white_18dp"
+                android:state_checked="false" />
+            <!-- When not selected, use white-->
+            <item android:drawable="@drawable/ic_star_rate_white_18dp"
+                android:state_checked="true"/>
+        </selector>
+    </item>
+</layer-list>
+

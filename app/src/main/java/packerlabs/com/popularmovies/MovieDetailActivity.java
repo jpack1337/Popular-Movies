@@ -59,11 +59,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     RelativeLayout mDescCard, mReleaseCard;
     Button mTrailersBtn, mReviewBtn;
     ToggleButton mFavoriteBtn;
-    int mTopLayoutSize = 0, mDescCardSize, mReleaseCardSize;
+    int mTopLayoutSize = 0;
     RecyclerView mRecyvlerViewTemp;
     TrailersRecyclerAdapter trailersRecyclerAdapter;
     ReviewsRecyclerAdapter reviewsRecylerAdapter;
-    RecyclerView mReviewsRecylerView;
     LinearLayoutManager llm = new LinearLayoutManager(this);
     int viewHeight = 0;
     ScrollView mScrollView;
@@ -75,6 +74,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     boolean isTrailersMenuOpen, isReviewsMenuOpen;
     View parentLayout;
     int mTrailersHeight, mReviewsHeight;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("isReviewsOpen", isReviewsMenuOpen);
+        outState.putBoolean("isTrailersOpen", isTrailersMenuOpen);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +126,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Bundle data = getIntent().getExtras();
         mCurrentMovie = data.getParcelable("movie");
+        isReviewsMenuOpen = data.getBoolean("isReviewsOpen");
+        isTrailersMenuOpen = data.getBoolean("isTrailersMenuOpen");
+
         mReleaseDateText.setText(mCurrentMovie.getDateString());
 
         getSupportActionBar().setTitle(mCurrentMovie.getTitle());
@@ -152,7 +161,10 @@ public class MovieDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        mFavoriteBtn.setChecked(doesMovieExists(mCurrentMovie.getMovieID()));
+
+        isMovieFavorited = doesMovieExists(mCurrentMovie.getMovieID());
+        mFavoriteBtn.setChecked(isMovieFavorited);
+
 
         mFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,14 +173,15 @@ public class MovieDetailActivity extends AppCompatActivity {
                 if (!isMovieFavorited) {
                     getContentResolver().insert(MovieProvider.CONTENT_URI,mCurrentMovie.toContentValues());
                     isMovieFavorited = true;
+                    showSnackBar(mCurrentMovie.getTitle() + " has been added to your favorites!");
 
                 } else {
                     String selection = MoviesContract.MovieEntry.COLUMN_MOVIE_ID + " = "+mCurrentMovie.getMovieID();
                     getContentResolver().delete(MovieProvider.CONTENT_URI, selection, null);
                     isMovieFavorited = false;
-
-                    Log.d("Movie Removed", "Yes");
+                    showSnackBar(mCurrentMovie.getTitle() + " has been removed from favorites!");
                 }
+
                 mFavoriteBtn.setChecked(isMovieFavorited);
             }
         });
@@ -178,27 +191,19 @@ public class MovieDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 if (isOnline) {
-                    getSupportActionBar().hide();
-                    mTrailersBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    mReviewBtn.setBackgroundColor(getResources().getColor(R.color.black));
-                    mTopButtonLayouts.setAlpha(1.0F);
-                    isTrailersMenuOpen = true;
-                    trailersRecyclerAdapter = new TrailersRecyclerAdapter(mTrailersArray);
-                    trailersRecyclerAdapter.setmCurrentMovie(mCurrentMovie);
-
-                    mRecyvlerViewTemp.setLayoutManager(llm);
-                    mRecyvlerViewTemp.setAdapter(trailersRecyclerAdapter);
-                    mRecyvlerViewTemp.setVisibility(View.VISIBLE);
-
-                    Log.d("Height", mScrollView.getHeight() + "");
-                    if (mRecyvlerViewTemp.getHeight() == 1)
-                        PMHelperMethods.expand(mRecyvlerViewTemp, 500, mScrollView.getHeight());
-
+                    if (mTrailersArray.size() > 0) {
+                        showTrailers();
                     } else {
-                    showSnackBar("Go online to see trailers for " + mCurrentMovie.getTitle());
+                        showSnackBar("No Trailers Available");
+                        Log.d("Trailers", "NONE");
                     }
+                } else {
+                    showSnackBar("Go online to see trailers for " + mCurrentMovie.getTitle());
                 }
+            }
+
             });
 
 
@@ -208,21 +213,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 
                 if(isOnline) {
                     if (mReviewsArray.size() > 0) {
-                        getSupportActionBar().hide();
-                        mReviewBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                        mTrailersBtn.setBackgroundColor(getResources().getColor(R.color.black));
-                        isReviewsMenuOpen = true;
-                        mTopButtonLayouts.setAlpha(1.0F);
-                        reviewsRecylerAdapter = new ReviewsRecyclerAdapter(mReviewsArray);
-                        reviewsRecylerAdapter.setmCurrentMovie(mCurrentMovie);
 
-                        mRecyvlerViewTemp.setLayoutManager(llm);
-                        mRecyvlerViewTemp.setAdapter(reviewsRecylerAdapter);
-                        mRecyvlerViewTemp.setVisibility(View.VISIBLE);
-
-                        Log.d("Height", mScrollView.getHeight() + "");
-                        if (mRecyvlerViewTemp.getHeight() == 1)
-                            PMHelperMethods.expand(mRecyvlerViewTemp, 500, mScrollView.getHeight());
+                       showReviews();
                     } else {
                         showSnackBar("No Reviews Available");
                         Log.d("Reviews", "NONE");
@@ -238,8 +230,54 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         loadTrailers();
         loadReviews();
+
+        //Check if menu's are open from orientation switch, and reload
+        if (isReviewsMenuOpen) {
+            showReviews();
+            Log.d("Reviews Open", "True");
+        }
+
+        if(isTrailersMenuOpen)
+            showTrailers();
+         Log.d("Trailers Open", "True");
     }
 
+    void showReviews(){
+        getSupportActionBar().hide();
+        mReviewBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        mTrailersBtn.setBackgroundColor(getResources().getColor(R.color.black));
+        isReviewsMenuOpen = true;
+        mTopButtonLayouts.setAlpha(1.0F);
+        reviewsRecylerAdapter = new ReviewsRecyclerAdapter(mReviewsArray);
+        reviewsRecylerAdapter.setmCurrentMovie(mCurrentMovie);
+
+        mRecyvlerViewTemp.setLayoutManager(llm);
+        mRecyvlerViewTemp.setAdapter(reviewsRecylerAdapter);
+        mRecyvlerViewTemp.setVisibility(View.VISIBLE);
+
+        Log.d("Height", mRecyvlerViewTemp.getHeight() + "");
+        //if (mRecyvlerViewTemp.getHeight() == 1)
+            PMHelperMethods.expand(mRecyvlerViewTemp, 500, mScrollView.getHeight());
+    }
+
+    void showTrailers(){
+        getSupportActionBar().hide();
+        mTrailersBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        mReviewBtn.setBackgroundColor(getResources().getColor(R.color.black));
+        mTopButtonLayouts.setAlpha(1.0F);
+        isTrailersMenuOpen = true;
+        trailersRecyclerAdapter = new TrailersRecyclerAdapter(mTrailersArray);
+        trailersRecyclerAdapter.setmCurrentMovie(mCurrentMovie);
+
+        mRecyvlerViewTemp.setLayoutManager(llm);
+        mRecyvlerViewTemp.setAdapter(trailersRecyclerAdapter);
+        mRecyvlerViewTemp.setVisibility(View.VISIBLE);
+
+        Log.d("Height", mRecyvlerViewTemp.getHeight() + "");
+      //  if (mRecyvlerViewTemp.getHeight() == 1)
+            PMHelperMethods.expand(mRecyvlerViewTemp, 500, mScrollView.getHeight());
+
+    }
 
     boolean doesMovieExists(String id){
         Cursor c = getContentResolver().query(MovieProvider.CONTENT_URI, null, MoviesContract.MovieEntry.COLUMN_MOVIE_ID + " = " + DatabaseUtils.sqlEscapeString(id), null, null);
