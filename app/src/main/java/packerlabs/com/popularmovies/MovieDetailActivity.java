@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static android.R.attr.button;
+import static android.R.attr.data;
 
 public class MovieDetailActivity extends AppCompatActivity {
     Movie mCurrentMovie;
@@ -149,6 +152,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                     }
                 });
 
+        mFavoriteBtn.setChecked(doesMovieExists(mCurrentMovie.getMovieID()));
+
         mFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,6 +241,17 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
 
+    boolean doesMovieExists(String id){
+        Cursor c = getContentResolver().query(MovieProvider.CONTENT_URI, null, MoviesContract.MovieEntry.COLUMN_MOVIE_ID + " = " + DatabaseUtils.sqlEscapeString(id), null, null);
+        if(c != null && c.getCount() == 0) {
+            // not found in database
+            Log.d("Exists", "Movie Not Found");
+            return false;
+        }else{
+            Log.d("Exists", "Movie Exists");
+            return true;
+        }
+    }
 
 
     void loadTrailers() {
