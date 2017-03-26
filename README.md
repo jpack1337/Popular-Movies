@@ -7,7 +7,7 @@ Struggling to find something to watch? Popular Movies is your answer! Utilizing 
 
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-120619.png" width="50%" height="50%">
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-120630.png" width="50%" height="50%">
-<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-120636.png" width="50%" height="50%">
+<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-131425.png" width="50%" height="50%">
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-125712.png" width="50%" height="50%">
 
 <b>Landscape Orientation </b>
