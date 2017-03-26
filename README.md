@@ -1,5 +1,5 @@
 # Popular-Movies
-Struggling to find something to watch? Popular Movies is your answer!  By utilizing The Movie DB API and modern android practices like Async data loading, Content Providers, RecyclerViews, Localization and Material Design, Popular Movies is a production ready app. This the app makes use of the following endpoints:
+Struggling to find something to watch? Popular Movies is your answer!  By utilizing The Movie DB API and modern android practices like Async data loading, Content Providers, RecyclerViews, Localization and Material Design, Popular Movies is a production ready app. The app makes use of the following TheMovieDB.org endpoints:
 - <b>top_rated</b>
 - <b>now_playing</b>
 - <b>popular</b>
@@ -15,19 +15,19 @@ Struggling to find something to watch? Popular Movies is your answer!  By utiliz
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-124230.png" width="50%" height="50%">
 
 <b>View Trailers</b>
-- Select a movie and view trailers straight from Youtube!
+- View trailers provided by Youtube!
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-120722.png" width="50%" height="50%">
 
 <b>Share Trailers</b>
-- Select a trailer and share with your friends! 
+- Share a trailer link and message with your friends! 
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-122804.png" width="50%" height="50%">
 
 <b>View Reviews</b>
-- View reviews from selected movies and see what the hype is about.
+- View reviews and see what the hype is about.
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-120728.png" width="50%" height="50%">
 
 <b>Landscape Orientation </b>
-- You can now enjoy the same movie finding greatness in landscape!
+- Enjoy the same movie finding greatness in landscape!
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-131154.png" width="50%" height="50%">
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-131039.png" width="50%" height="50%">
 <img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-131051.png" width="50%" height="50%">
