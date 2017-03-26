@@ -1,5 +1,5 @@
 # Popular-Movies
-Struggling to find something to watch? Popular Movies is your answer!  By utilizing The Movie DB API(Grab your API Key code below) and modern android practices like  Async data loading, Content Providers, RecyclerViews and Material Design. This the app makes use of the following endpoints:
+Struggling to find something to watch? Popular Movies is your answer!  By utilizing The Movie DB API and modern android practices like Async data loading, Content Providers, RecyclerViews, Localization and Material Design, Popular Movies is a production ready app. This the app makes use of the following endpoints:
 - <b>top_rated</b>
 - <b>now_playing</b>
 - <b>popular</b>
