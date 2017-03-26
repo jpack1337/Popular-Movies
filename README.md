@@ -12,10 +12,10 @@ Struggling to find something to watch? Popular Movies is your answer! Utilizing 
 
 <b>Landscape Orientation </b>
 - You can now enjoy the same movie finding greatness in landscape!
-<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-130148.png" width="50%" height="50%">
-<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-125859.png" width="50%" height="50%">
-<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-124741.png" width="50%" height="50%">
-<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-124738.png" width="50%" height="50%">
+<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-131154.png" width="50%" height="50%">
+<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-131039.png" width="50%" height="50%">
+<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-131051.png" width="50%" height="50%">
+<img src="http://packerlabs.com/projects/popmovies/Screenshot_20170326-131046.png" width="50%" height="50%">
 
 <b>Favorited Movies </b>
 - You can now Favorite movies and see them in one place powered by a Content Provider and SQL Lite Database
