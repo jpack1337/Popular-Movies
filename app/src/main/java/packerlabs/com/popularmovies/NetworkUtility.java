@@ -28,7 +28,7 @@ public class NetworkUtility {
 
     //TODO Add Your Own API Key
     //www.themodiedb.org
-    String APIKey = "";
+    String APIKey = "ea4c651a09961d8d50e27ff0b17ed370";
     String URL = String.format("http://api.themoviedb.org/3/movie/%s?api_key=%s", "upcoming", APIKey);
 
 
